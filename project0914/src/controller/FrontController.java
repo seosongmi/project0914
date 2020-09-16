@@ -32,6 +32,9 @@ public class FrontController extends HttpServlet {
 		charset = config.getInitParameter("charset");
 		list = new HashMap<String, Controller>();
 		list.put("/freeBoardwrite.do", new FreeBoardWriteController());
+		list.put("/freeBoardList.do", new FreeBoardListController());
+		list.put("/freeBoardDelete.do", new FreeBoardDeleteController());
+		list.put("/freeBoardUpdate.do", new FreeBoardUpdateController());
 	}
 
 //	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,6 +48,7 @@ public class FrontController extends HttpServlet {
 		String path = uri.substring(contextPath.length()); // /memberInsert.do
 		Controller subController = list.get(path);
 		subController.execute(request, response);
+		
 		
 	}
 

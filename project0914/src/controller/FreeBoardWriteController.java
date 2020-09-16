@@ -27,6 +27,7 @@ public class FreeBoardWriteController implements Controller {
 		
 		freeBoardDAO DAO = new freeBoardDAO();
 		DAO.insert(freeboard);
+		
 	}
 
 }

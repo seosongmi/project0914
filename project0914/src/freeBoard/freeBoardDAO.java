@@ -34,6 +34,53 @@ public class freeBoardDAO {
 	   return r;
 	   }
 	   
+	 //전체조회 (페이징처리가 되는)
+		public ArrayList<freeBoardVO> selectAll() {
+			 freeBoardVO resultVO = null;
+			 ResultSet rs = null;
+			 ArrayList<freeBoardVO> list = new ArrayList<freeBoardVO>();
+			 try {
+				 conn = ConnectionManager.getConnnect();
+				 String sql = "select * from board";
+				 pstmt = conn.prepareStatement(sql);
+	
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					resultVO = new freeBoardVO();
+					resultVO.setBoard_no(rs.getInt(1));
+					resultVO.setBoard_sub(rs.getString("board_sub"));
+					resultVO.setMember_id(rs.getString("member_id"));
+					resultVO.setBoard_content(rs.getString("board_content"));
+					list.add(resultVO);
+					System.out.println(resultVO.getBoard_sub());
+				} 
+			 }catch(Exception e) {
+				 e.printStackTrace();		 
+			 } finally {
+				 ConnectionManager.close(rs, pstmt, conn);
+			 }
+			return list;
+		}
+	   
+		//삭제
+		public int delete(freeBoardVO freeboardVO) {
+		       int r = 0;
+			   try {
+		         conn = ConnectionManager.getConnnect();
+		         String sql = "delete from board where board_no = ?";
+		         pstmt = conn.prepareStatement(sql);
+		         pstmt.setInt(1, freeboardVO.getBoard_no());
+		  
+		         r = pstmt.executeUpdate();
+		         System.out.println(r + "건이 입력됨");
+
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		      } finally {
+		         ConnectionManager.close(conn);
+		      }
+		   return r;
+		   }
 	   //단건조회
 //	   public freeBoardVO selectOne(freeBoardVO deptVO) {
 //			 freeBoardVO resultVO = null;
